@@ -295,12 +295,6 @@ int access_disabled(const struct su_initiator *from) {
     size_t len;
 
     data = read_file("/system/build.prop");
-    /* only allow su on Lineage 15.1 (or newer) builds */
-    if (!(check_property(data, "ro.lineage.version"))) {
-        free(data);
-        ALOGE("Root access disabled on Non-Lineage builds");
-        return 1;
-    }
 
     get_property(data, build_type, "ro.build.type", "");
     free(data);
