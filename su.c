@@ -266,22 +266,8 @@ static __attribute__((noreturn)) void allow(struct su_context* ctx, const char* 
 }
 
 int access_disabled(const struct su_initiator* from) {
-    char lineage_version[PROPERTY_VALUE_MAX];
     char build_type[PROPERTY_VALUE_MAX];
     int enabled;
-
-    /* Only allow su on Lineage builds */
-    property_get("ro.lineage.version", lineage_version, "");
-    if (!strcmp(lineage_version, "")) {
-        ALOGE("Root access disabled on Non-Lineage builds");
-        return 1;
-    }
-
-    /* Only allow su on debuggable builds */
-    if (!property_get_bool("ro.debuggable", false)) {
-        ALOGE("Root access is disabled on non-debug builds");
-        return 1;
-    }
 
     /* Enforce persist.sys.root_access on non-eng builds for apps */
     enabled = property_get_int32("persist.sys.root_access", 2);
